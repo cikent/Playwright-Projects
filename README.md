@@ -4,7 +4,7 @@ Various projects utilizing Playwright as the primary open source tool
 
 ## Playwright Terminal Commands
 
-### Installing Playwright
+### [Installing Playwright](https://playwright.dev/docs/intro#installing-playwright)
 
 The command below either initializes a new project or adds Playwright to an existing one.
 
@@ -21,7 +21,7 @@ When prompted, choose / confirm:
 
 You can re-run the command later; it does not overwrite existing tests.
 
-### Running the Example Test
+### [Running the Example Test](https://playwright.dev/docs/intro#running-the-example-test)
 
 By default tests run headless in parallel across Chromium, Firefox and WebKit (configurable in playwright.config). Output and aggregated results display in the terminal.
 
@@ -29,7 +29,7 @@ By default tests run headless in parallel across Chromium, Firefox and WebKit (c
 npx playwright test
 ```
 
-### HTML Test Reports
+### [HTML Test Reports](https://playwright.dev/docs/intro#html-test-reports)
 
 After a test run, the HTML Reporter provides a dashboard filterable by the browser, passed, failed, skipped, flaky and more. Click a test to inspect errors, attachments and steps. It auto-opens only when failures occur; open manually with the command below.
 
