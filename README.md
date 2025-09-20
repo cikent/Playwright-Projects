@@ -10,11 +10,11 @@ npm init playwright@latest
 ```
 
 When prompted, choose / confirm:
+* TypeScript or JavaScript (default: TypeScript)
+* Tests folder name (default: tests, or e2e if tests already exists)
+* Add a GitHub Actions workflow (recommended for CI)
+* Install Playwright browsers (default: yes)
 
-TypeScript or JavaScript (default: TypeScript)
-Tests folder name (default: tests, or e2e if tests already exists)
-Add a GitHub Actions workflow (recommended for CI)
-Install Playwright browsers (default: yes)
 You can re-run the command later; it does not overwrite existing tests.
 
 * Running the Example Test:
