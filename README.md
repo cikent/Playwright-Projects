@@ -36,3 +36,11 @@ After a test run, the HTML Reporter provides a dashboard filterable by the brows
 ```shell
 npx playwright show-report
 ```
+
+### [Running the Example Test in UI Mode](https://playwright.dev/docs/intro#running-the-example-test-in-ui-mode)
+
+Run tests with UI Mode for watch mode, live step view, time travel debugging and more.
+
+```shell
+npx playwright test --ui
+```
