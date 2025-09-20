@@ -1,9 +1,11 @@
 # Playwright-Projects
+
 Various projects utilizing Playwright as the primary open source tool
 
 ## Playwright Terminal Commands
 
-### Installing Playwright:
+### Installing Playwright
+
 The command below either initializes a new project or adds Playwright to an existing one.
 
 ```shell
@@ -11,6 +13,7 @@ npm init playwright@latest
 ```
 
 When prompted, choose / confirm:
+
 * TypeScript or JavaScript (default: TypeScript)
 * Tests folder name (default: tests, or e2e if tests already exists)
 * Add a GitHub Actions workflow (recommended for CI)
