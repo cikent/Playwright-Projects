@@ -2,6 +2,11 @@
 
 Various projects utilizing Playwright as the primary open source tool
 
+## Initial Setup
+
+* Navigate to //Playwright-Projects/PlaywrightDemoApps/ to view Playwright Test Applications I've created
+* To create a new Playwright Test Application, create a new folder AND cd into that directory, then proceed with the following instructions
+
 ## Playwright Terminal Commands
 
 ### [Installing Playwright](https://playwright.dev/docs/intro#installing-playwright)
