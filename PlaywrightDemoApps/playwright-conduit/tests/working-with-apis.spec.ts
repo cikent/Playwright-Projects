@@ -1,12 +1,26 @@
 //Import { test, expect } from '@playwright/test';
 import { test, expect } from '@playwright/test';
+import tags from '../test-data/tags.json'
 
-//This BeforeEach hook will run before each test in this file. It navigates to the specified URL before each test is executed.
+/**
+* Set up the test environment before each test. Intercept the API request for tags and fulfill it with the mock data from tags.json.
+ */
 test.beforeEach(async ({ page }) => {
+  await page.route('*/**/api/tags', async route => {
+    await route.fulfill({
+      json: tags
+    })
+  })
+
+  // Navigate to the Conduit application before each test
   await page.goto('https://conduit.bondaracademy.com/');
 })
 
-//This test checks if the page has the expected title. It locates the element with the class 'navbar-brand' and verifies that its text matches the regular expression /conduit/.
+/**
+* Test to verify the title and tags in the Conduit application. It checks if the navbar brand contains the text 'conduit' and if the sidebar contains the expected tags from the mock data.
+ */
 test('Has Title', async ({ page }) => {
   await expect(page.locator('.navbar-brand')).toHaveText(/conduit/);
+  await expect(page.locator('.sidebar .tag-pill')).toContainText(['Automation', 'Playwright']);
+
 });
