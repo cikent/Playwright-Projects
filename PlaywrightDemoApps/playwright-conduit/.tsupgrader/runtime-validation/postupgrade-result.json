@@ -1,0 +1,60 @@
+{
+  "planHash": "4768162397e40eeae7387233df89fd4be32237d2f5b028fb49a22a36aa3b4854",
+  "phase": "postupgrade",
+  "recordedAtUtc": "2026-10-29T10:40:29.1125084Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 1819,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E playwright-conduit@1.0.0 test\r\n\u003E playwright test --project=chromium --grep=Has --reporter=line\r\n\r\n\r\nRunning 1 test using 1 worker\r\n\r\n[1/1] [chromium] \u203A tests\\working-with-apis.spec.ts:4:5 \u203A Has Title\r\n  1 passed (1.7s)\r\n",
+        "durationMs": 2340,
+        "testResults": {
+          "testFramework": "unknown",
+          "runnerDetectedFrom": "none",
+          "testsTotal": 0,
+          "testsPassed": 0,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": true
+        }
+      }
+    ],
+    "executions": [
+      {
+        "source": "setup[0]",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "ci"
+        ],
+        "cwd": "C:\\Development\\Playwright-Projects\\PlaywrightDemoApps\\playwright-conduit",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "test"
+        ],
+        "cwd": "C:\\Development\\Playwright-Projects\\PlaywrightDemoApps\\playwright-conduit",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      }
+    ]
+  }
+}
