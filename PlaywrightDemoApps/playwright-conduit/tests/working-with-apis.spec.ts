@@ -1,20 +1,21 @@
-//Import { test, expect } from '@playwright/test';
+/**
+ * Tests for working with APIs in the Conduit application.
+ * Includes tests for fetching articles, deleting articles, and user authentication.
+ */
 import { test, expect } from '@playwright/test';
 import tags from '../test-data/tags.json'
 
-/**
-* Set up the test environment before each test. Mock the API request for tags and fulfill it with the mock data from tags.json.
- */
-test.beforeEach(async ({ page }) => {
+// Test that the article title and description are displayed correctly.
+test('Has Title', async ({ page }) => {
   await page.route('*/**/api/tags', async route => {
     await route.fulfill({
       json: tags
     })
   })
 
-  //Fetch AND then modify the Articles properties to then conduct a verification
+  // 
   await page.route('*/**/api/articles*', async route => {
-    const response = await route.fetch()             
+    const response = await route.fetch()
     const responseJSON = await response.json()
     responseJSON.articles[0].title = 'This is a MOCK title for the article'
     responseJSON.articles[0].description = 'This is a MOCK description for the article'
@@ -23,17 +24,50 @@ test.beforeEach(async ({ page }) => {
     })
   })
 
-  // Navigate to the Conduit application before each test
-  await page.goto('https://conduit.bondaracademy.com/');
-})
-
-/**
-* Test to verify the title and tags in the Conduit application. It checks if the navbar brand contains the text 'conduit' and if the sidebar contains the expected tags from the mock data.
-*/
-test('Has Title', async ({ page }) => {
-  await expect(page.locator('.navbar-brand')).toHaveText(/conduit/);
-  await expect(page.locator('.sidebar .tag-pill')).toContainText(['Automation', 'Playwright']);
-  await expect(page.locator('.preview-link h1').first()).toContainText('This is a MOCK title for the article')
-  await expect(page.locator('.preview-link p').first()).toContainText('This is a MOCK description for the article')
-
+  await page.goto('https://conduit.bondaracademy.com/');              // Navigate to the Conduit application.
+  await expect(page.locator('.navbar-brand')).toHaveText(/conduit/);        // Verify that the Conduit logo is displayed.
+  await expect(page.locator('.sidebar .tag-pill')).toContainText(['Automation', 'Playwright']);        // Verify that the tags are displayed in the sidebar.
+  await expect(page.locator('.preview-link h1').first()).toContainText('This is a MOCK title for the article')        // Verify that the article title is displayed.
+  await expect(page.locator('.preview-link p').first()).toContainText('This is a MOCK description for the article')        // Verify that the article description is displayed.
 });
+
+test('Delete Article', async ({ page, request }) => {
+  const loginResponse = await request.post('https://conduit-api.bondaracademy.com/api/users/login', {
+    data: {                     // Add the user credentials to the request body.
+      "user": {
+        "email": "ckentTest+christopherikent@gmail.com",
+        "password": "ckentTest321"
+      }
+    }
+  })
+  expect(loginResponse.status()).toEqual(200)         // Verify that the user logged in successfully.
+  const responseLoginJSON = await loginResponse.json()
+  const token = responseLoginJSON.user.token
+
+  const newArticleResponse = await request.post('https://conduit-api.bondaracademy.com/api/articles/', {
+    data: {                     // Add the article data to the request body.
+      "article": {
+        "title": "Test Title",
+        "description": "Test Description",
+        "body": "Test Body",
+        "tagList": []
+      }
+    },
+    headers: {
+      'Authorization': `Token ${token}`     // Add the authorization token to the request headers.
+    }
+  })
+  expect(newArticleResponse.status()).toEqual(201) // Verify that the article was created successfully. 
+
+  await page.goto('https://conduit.bondaracademy.com/');        // Navigate to the Conduit application.
+  await page.getByText('Sign in').click()                       // Click the Sign in link.
+  await page.getByRole('textbox', { name: 'Email' }).fill('ckentTest+christopherikent@gmail.com') // Enter the email address.
+  await page.getByRole('textbox', { name: 'Password' }).fill('ckentTest321') // Enter the password.
+  await page.getByRole('button', { name: 'Sign in' }).click()                 // Click the Sign in button.
+
+  await expect(page.locator('.preview-link h1').first()).toContainText('Test Title') // Verify that the article is displayed on the page.
+  await page.getByText('Test Title').click()                                          // Open the article.
+  await page.getByRole('button', { name: 'Delete Article' }).first().click()            // Delete the article.
+  await page.waitForResponse('https://conduit-api.bondaracademy.com/api/articles?limit=10&offset=0') // Wait for the articles list to be fetched.
+  await expect(page.locator('.preview-link h1').first()).not.toContainText('Test Title') // Verify that the article is no longer displayed on the page.
+})
