@@ -77,8 +77,9 @@ test('Create Article', async ({ page, request }) => {
   await page.getByText('New Article').click()
   await page.getByRole('textbox', { name: 'Article Title' }).fill('Playwright is awesome')    //  Fill in the article title.      
   await page.getByRole('textbox', { name: 'What\'s this article about?' }).fill('We can use APIs in Playwright')  // Fill in the article description.
-  await page.getByRole('textbox', { name: 'Write your article (in markdown)' }).fill('Automate any web application in Playwright')   // Fill in the article body.
+  await page.getByRole('textbox', { name: 'Write your article (in markdown)' }).fill('Automate any web application in Playwright') // Fill in the article body.
   await page.getByRole('button', { name: 'Publish Article' }).click()      // Click the Publish Article button.
+  
   const createArticleResponse = await page.waitForResponse('https://conduit-api.bondaracademy.com/api/articles/') // Wait for the articles list to be fetched.
   const articleResponseJSON = await createArticleResponse.json()
   const slugID = articleResponseJSON.article.slug
@@ -88,7 +89,7 @@ test('Create Article', async ({ page, request }) => {
   await expect(page.locator('.article-preview h1').first()).toContainText('Playwright is awesome') // Verify that the article is displayed on the home page.
 
   const loginResponse = await request.post('https://conduit-api.bondaracademy.com/api/users/login', {
-    data: {                     // Add the user credentials to the request body.
+    data: {
       "user": {
         "email": "ckentTest+christopherikent@gmail.com",
         "password": "ckentTest321"
