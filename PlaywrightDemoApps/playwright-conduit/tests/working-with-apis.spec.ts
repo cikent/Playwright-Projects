@@ -84,7 +84,7 @@ test('Create Article', async ({ page, request }) => {
   const articleResponseJSON = await createArticleResponse.json()
   const slugID = articleResponseJSON.article.slug
 
-  await expect(page.locator('.article-page h1')).toContainText('Playwright is awesome') // Verify that the article is displayed on the page.
+  await expect(page.locator('.article-link h1')).toContainText('Playwright is awesome') // Verify that the article is displayed on the page.
   await page.getByText('Home').first().click() // Navigate back to the home page.
   await expect(page.locator('.article-preview h1').first()).toContainText('Playwright is awesome') // Verify that the article is displayed on the home page.
 
