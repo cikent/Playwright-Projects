@@ -81,8 +81,8 @@ test('Create Article', async ({ page, request }) => {
   await page.getByRole('button', { name: 'Publish Article' }).click()      // Click the Publish Article button.
   
   const createArticleResponse = await page.waitForResponse('https://conduit-api.bondaracademy.com/api/articles/') // Wait for the articles list to be fetched.
-  const articleResponseJSON = await createArticleResponse.json()
-  const slugID = articleResponseJSON.article.slug
+  const articleResponseJSON = await createArticleResponse.json()  // Parse the response JSON to extract the article slug.
+  const slugID = articleResponseJSON.article.slug                 // Extract the article slug from the response.
 
   await expect(page.locator('.article-page h1')).toContainText('Playwright is awesome') // Verify that the article is displayed on the page.
   await page.getByText('Home').first().click() // Navigate back to the home page.
@@ -96,12 +96,12 @@ test('Create Article', async ({ page, request }) => {
       }
     }
   })
-  expect(loginResponse.status()).toEqual(200)         // Verify that the user logged in successfully.
-  const responseLoginJSON = await loginResponse.json()
-  const token = responseLoginJSON.user.token
+  expect(loginResponse.status()).toEqual(200)           // Verify that the user logged in successfully.
+  const responseLoginJSON = await loginResponse.json()  // Parse the login response JSON to extract the token.
+  const token = responseLoginJSON.user.token            // Extract the token from the login response.
 
   const deleteResponse = await request.delete(`https://conduit-api.bondaracademy.com/api/articles/${slugID}`, {
-    headers: {
+    headers: {    // Add the authorization token to the request headers.
       Authorization: `Token ${token}`
     }
   })
