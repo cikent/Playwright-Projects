@@ -34,6 +34,8 @@ export default defineConfig({
       'Accept-Encoding': 'identity',
     }
   },
+  globalSetup: require.resolve('./global-setup'),
+  globalTeardown: require.resolve('./global-teardown'),
 
   /* Configure projects for major browsers */
   projects: [
